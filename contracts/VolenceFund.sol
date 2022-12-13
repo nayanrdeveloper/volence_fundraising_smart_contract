@@ -121,6 +121,20 @@ contract VolenceFund {
         string memory _desc,
         string memory _image
     ) public returns (uint) {
+        bool isApprovedVoleunteer = false;
+        for (uint i = 0; i < counterVolunteerId - 1; i++) {
+            if (
+                volunteers[i].volunteerAddress == msg.sender &&
+                volunteers[i].active
+            ) {
+                isApprovedVoleunteer = true;
+                break;
+            }
+        }
+        require(
+            msg.sender == owner || isApprovedVoleunteer,
+            "Only owner or active voleunteer approve volunteer"
+        );
         categories.push();
         uint index = categories.length - 1;
 
